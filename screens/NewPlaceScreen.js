@@ -7,18 +7,31 @@ import {
   ScrollView,
   Button,
 } from "react-native";
+import { useDispatch } from "react-redux";
 
 import Colors from "../constants/Colors";
+import * as placesActions from "../store/places-actions";
+import ImagePicker from "../components/ImagePicker";
 
-export default function NewPlaceScreen() {
+export default function NewPlaceScreen({ navigation }) {
   const [titleValue, setTitleValue] = useState("");
+  const [selectedImage, setSelectedImage] = useState();
+  // console.log(selectedImage);
+  
+  const dispatch = useDispatch();
 
   function titleChangeHandler(text) {
     setTitleValue(text);
   }
 
+  function imageTakenHandler( imagePath ) {
+    setSelectedImage(imagePath);
+    console.log(imagePath);
+  }
+  
   function savePlaceHandler() {
-    setTitleValue(titleValue)
+    dispatch(placesActions.addPlace(titleValue, selectedImage));
+    navigation.goBack();
   }
 
   return (
@@ -30,7 +43,12 @@ export default function NewPlaceScreen() {
           onChangeText={titleChangeHandler}
           value={titleValue}
         />
-        <Button title="save" color={Colors.primary} onPress={savePlaceHandler} />
+        <ImagePicker onImageTaken={imageTakenHandler} />
+        <Button
+          title="save"
+          color={Colors.primary}
+          onPress={savePlaceHandler}
+        />
       </View>
     </ScrollView>
   );
