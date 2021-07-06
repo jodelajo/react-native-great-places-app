@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   Text,
   View,
@@ -14,24 +14,30 @@ import * as placesActions from "../store/places-actions";
 import ImagePicker from "../components/ImagePicker";
 import LocationPicker from "../components/LocationPicker";
 
-export default function NewPlaceScreen({ navigation }) {
+export default function NewPlaceScreen({ navigation, route }) {
   const [titleValue, setTitleValue] = useState("");
   const [selectedImage, setSelectedImage] = useState();
-  // console.log(selectedImage);
-  
+  const [selectedLocation, setSelectedLocation] = useState()
+
+  // console.log('selected Location', selectedLocation);
+
   const dispatch = useDispatch();
 
   function titleChangeHandler(text) {
     setTitleValue(text);
   }
 
-  function imageTakenHandler( imagePath ) {
+  function imageTakenHandler(imagePath) {
     setSelectedImage(imagePath);
-    console.log(imagePath);
+    // console.log(imagePath);
   }
-  
+
+  const locationPickedHandler = useCallback((location) => {
+    setSelectedLocation(location);
+  },[])
+
   function savePlaceHandler() {
-    dispatch(placesActions.addPlace(titleValue, selectedImage));
+    dispatch(placesActions.addPlace(titleValue, selectedImage, selectedLocation));
     navigation.goBack();
   }
 
@@ -45,7 +51,11 @@ export default function NewPlaceScreen({ navigation }) {
           value={titleValue}
         />
         <ImagePicker onImageTaken={imageTakenHandler} />
-        <LocationPicker />
+        <LocationPicker
+          navigation={navigation}
+          route={route}
+          onLocationPicked={locationPickedHandler}
+        />
         <Button
           title="save"
           color={Colors.primary}

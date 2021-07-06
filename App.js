@@ -11,7 +11,7 @@ import { init } from "./helpers/db";
 
 init()
   .then(() => {
-    console.log("initialize db");
+    // console.log("initialize db");
   })
   .catch((err) => {
     console.log("initializes db failed");
