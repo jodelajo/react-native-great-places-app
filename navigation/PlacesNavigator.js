@@ -1,6 +1,6 @@
 import React from "react";
 import { Platform } from "react-native";
-import { createStackNavigator, HeaderTitle } from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import PlacesListScreen from "../screens/PlacesListScreen";
 import NewPlaceScreen from "../screens/NewPlaceScreen";

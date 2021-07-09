@@ -11,15 +11,13 @@ import {
 import Colors from "../constants/Colors";
 import * as Location from "expo-location";
 import MapPreview from "./MapPreview";
-import { NavigationContainer } from "@react-navigation/native";
 
 export default function LocationPicker({ navigation, route, onLocationPicked }) {
   const [pickedLocation, setPickedLocation] = useState();
   const [isFetching, setIsFetching] = useState(false);
 
   const mapPickedLocation = route.params ? route.params.pickedLocation : null;
-  // console.log("locationPicker - mapPickedLocation", mapPickedLocation);
-
+  
 
   useEffect(() => {
     if (mapPickedLocation) {
@@ -50,7 +48,7 @@ export default function LocationPicker({ navigation, route, onLocationPicked }) 
       const location = await Location.getCurrentPositionAsync({
         timeout: 5000,
       });
-      // console.log("location", location);
+     
       setPickedLocation({
         lat: location.coords.latitude,
         lng: location.coords.longitude,

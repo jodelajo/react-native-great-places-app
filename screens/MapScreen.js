@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import {
   Text,
-  View,
   StyleSheet,
   TouchableOpacity,
   Platform,
@@ -13,8 +12,6 @@ export default function MapScreen({ navigation, route }) {
   const initialLocation = route.params ? route.params.initialLocation : null;
   const readonly = route.params ? route.params.readonly : null;
   const [selectedLocation, setSelectedLocation] = useState(initialLocation);
-
-
 
   const mapRegion = {
     latitude: initialLocation ? initialLocation.lat : 37.78,
@@ -31,9 +28,8 @@ export default function MapScreen({ navigation, route }) {
       lat: event.nativeEvent.coordinate.latitude,
       lng: event.nativeEvent.coordinate.longitude,
     });
-    // console.log(event);
   }
-  //   console.log('selected location 1', selectedLocation);
+
 
   const savePickLocationHandler = useCallback(() => {
     if (!selectedLocation) {
@@ -42,7 +38,6 @@ export default function MapScreen({ navigation, route }) {
     navigation.navigate("NewPlace", { pickedLocation: selectedLocation });
   }, [selectedLocation]);
 
-  // console.log('selected location', selectedLocation);
 
   useEffect(() => {
     navigation.setParams({ saveLocation: savePickLocationHandler });
@@ -56,8 +51,7 @@ export default function MapScreen({ navigation, route }) {
       longitude: selectedLocation.lng,
     };
   }
-  //   console.log('selected location 2', selectedLocation);
-  //   console.log('marker coordinates', markerCoordinates);
+
   return (
     <MapView
       style={styles.map}
@@ -76,15 +70,12 @@ export const screenOptionsMap = (navData) => {
   const saveFn = routeParams
     ? routeParams.saveLocation
     : null;
-
-    // const saveFN = navData.navigation.setOptions ? navData.navigation.setOptions.saveLocation : null
     
     const readonly = routeParams ? routeParams.readonly : null;
     if (readonly) {
       return {}
     }
-//   console.log("navData route", navData.route.params);
-//   console.log(routeParams);
+
   return {
     // headerTitle: "Map",
     headerRight: () => (

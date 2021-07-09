@@ -66,24 +66,12 @@ export const loadPlaces = () => {
     try {
       const dbResult = await fetchPlaces();
       dispatch({ type: SET_PLACES, places: dbResult.rows._array });
-      
     } catch (err) {
       throw err;
     }
   };
 };
 
-
-// export const deletePlace = async (selectedPlace) => {
-//   return async () => {
-//     console.log('del??', selectedPlace);
-//     try {
-//       await FileSystem.deleteAsync(FileSystem.documentDirectory + selectedPlace);
-//     } catch (err) {
-//       throw err;
-//     }
-//   };
-// };
 export const delPlaces = () => {
   return async (dispatch) => {
     try {

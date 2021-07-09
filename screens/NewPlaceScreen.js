@@ -19,7 +19,6 @@ export default function NewPlaceScreen({ navigation, route }) {
   const [selectedImage, setSelectedImage] = useState();
   const [selectedLocation, setSelectedLocation] = useState()
 
-  console.log('selected Location', selectedLocation);
 
   const dispatch = useDispatch();
 
@@ -29,7 +28,6 @@ export default function NewPlaceScreen({ navigation, route }) {
 
   function imageTakenHandler(imagePath) {
     setSelectedImage(imagePath);
-    // console.log(imagePath);
   }
 
   const locationPickedHandler = useCallback((location) => {
@@ -70,15 +68,6 @@ export default function NewPlaceScreen({ navigation, route }) {
 export const screenOptionsNew = (navData) => {
   return {
     headerTitle: "New Place",
-    // headerRight: () => (
-    //     <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-    //         <Item title="All Places"
-    //         iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
-    //         onPress={() =>
-    //         navData.navigation.navigate('NewPlace')}
-    //         />
-    //     </HeaderButtons>
-    // )
   };
 };
 

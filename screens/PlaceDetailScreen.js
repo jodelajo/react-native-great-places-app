@@ -1,11 +1,17 @@
 import React, { useCallback, useEffect } from "react";
-import { Text, View, StyleSheet, ScrollView, Image } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  Image,
+  LogBox,
+} from "react-native";
 import MapPreview from "../components/MapPreview";
 import { useSelector } from "react-redux";
 import Colors from "../constants/Colors";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/HeaderButton";
-import * as placesActions from "../store/places-actions";
 import { useDispatch } from "react-redux";
 import { deletePlaces } from "../helpers/db";
 
@@ -15,9 +21,15 @@ export default function PlaceDetailScreen({ navigation, route }) {
     state.places.places.find((place) => place.id === placeId)
   );
 
+  LogBox.ignoreLogs([
+    "Non-serializable values were found in the navigation state",
+  ]);
   const dispatch = useDispatch();
 
-  const selectedLocation = { lat: selectedPlace ? selectedPlace.lat : null, lng: selectedPlace ? selectedPlace.lng : null };
+  const selectedLocation = {
+    lat: selectedPlace ? selectedPlace.lat : null,
+    lng: selectedPlace ? selectedPlace.lng : null,
+  };
   const showMapHandler = () => {
     navigation.navigate("Map", {
       readonly: true,
@@ -26,23 +38,25 @@ export default function PlaceDetailScreen({ navigation, route }) {
   };
 
   const deletePlaceHandler = useCallback(() => {
-   
-  deletePlaces(placeId)
-    navigation.push('AllPlaces');
+    deletePlaces(placeId);
+    navigation.push("AllPlaces");
   }, [placeId]);
-  
 
   useEffect(() => {
     navigation.setParams({ delLocation: deletePlaceHandler });
   }, [deletePlaceHandler]);
 
-
   return (
     <ScrollView contentContainerStyle={{ alignItems: "center" }}>
-      <Image source={{ uri: selectedPlace ? selectedPlace.imageUri: null }} style={styles.image} />
+      <Image
+        source={{ uri: selectedPlace ? selectedPlace.imageUri : null }}
+        style={styles.image}
+      />
       <View style={styles.locationContainer}>
         <View style={styles.addressContainer}>
-          <Text style={styles.address}>{selectedPlace ? selectedPlace.address: null}</Text>
+          <Text style={styles.address}>
+            {selectedPlace ? selectedPlace.address : null}
+          </Text>
         </View>
 
         <MapPreview
@@ -55,25 +69,23 @@ export default function PlaceDetailScreen({ navigation, route }) {
   );
 }
 
-
 export const screenOptionsDetails = (navData) => {
   const routeParams = navData.route.params;
-  const deleteFn = routeParams
-    ? routeParams.delLocation
-    : null;
+  const deleteFn = routeParams ? routeParams.delLocation : null;
 
   return {
     // headerTitle: route.params.placeTitle,
     headerRight: () => (
-        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-            <Item title="Delete Places"
-            iconName={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
-            onPress={deleteFn}
-            />
-        </HeaderButtons>
-    )
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Delete Places"
+          iconName={Platform.OS === "android" ? "md-trash" : "ios-trash"}
+          onPress={deleteFn}
+        />
+      </HeaderButtons>
+    ),
   };
-}
+};
 
 const styles = StyleSheet.create({
   image: {

@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import { Text, View, StyleSheet, Platform, FlatList } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, Platform, FlatList } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -9,15 +9,12 @@ import * as placesActions from "../store/places-actions";
 
 export default function PlacesListScreen({ navigation }) {
   const places = useSelector((state) => state.places.places);
-  
 
-  
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
 
   useEffect(() => {
-      dispatch(placesActions.loadPlaces())
-  }, [dispatch])
+    dispatch(placesActions.loadPlaces());
+  }, [dispatch]);
 
   return (
     <FlatList

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Text, View, Button, StyleSheet, Image, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import * as Permissions from "expo-permissions";
 import Colors from "../constants/Colors";
 
 export default function ImgPicker( {onImageTaken}) {
     const [pickedImage, setPickedImage] = useState();
-    // console.log(pickedImage);
+   
 
   async function verifyPermissions() {
     const result = await ImagePicker.requestCameraPermissionsAsync();
@@ -33,7 +32,6 @@ export default function ImgPicker( {onImageTaken}) {
     });
     setPickedImage(image.uri);
     onImageTaken(image.uri);
-    console.log(image.uri);
   }
 
   return (
