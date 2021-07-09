@@ -19,7 +19,7 @@ export default function NewPlaceScreen({ navigation, route }) {
   const [selectedImage, setSelectedImage] = useState();
   const [selectedLocation, setSelectedLocation] = useState()
 
-  // console.log('selected Location', selectedLocation);
+  console.log('selected Location', selectedLocation);
 
   const dispatch = useDispatch();
 
@@ -40,6 +40,7 @@ export default function NewPlaceScreen({ navigation, route }) {
     dispatch(placesActions.addPlace(titleValue, selectedImage, selectedLocation));
     navigation.goBack();
   }
+
 
   return (
     <ScrollView>

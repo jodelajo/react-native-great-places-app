@@ -32,7 +32,8 @@ export default function ImgPicker( {onImageTaken}) {
       quality: 0.5,
     });
     setPickedImage(image.uri);
-    onImageTaken(image.uri)
+    onImageTaken(image.uri);
+    console.log(image.uri);
   }
 
   return (

@@ -10,16 +10,23 @@ import MapView, { Marker } from "react-native-maps";
 import Colors from "../constants/Colors";
 
 export default function MapScreen({ navigation, route }) {
-  const [selectedLocation, setSelectedLocation] = useState();
+  const initialLocation = route.params ? route.params.initialLocation : null;
+  const readonly = route.params ? route.params.readonly : null;
+  const [selectedLocation, setSelectedLocation] = useState(initialLocation);
+
+
 
   const mapRegion = {
-    latitude: 37.78,
-    longitude: -122.43,
+    latitude: initialLocation ? initialLocation.lat : 37.78,
+    longitude: initialLocation ? initialLocation.lng : -122.43,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
 
   function selectLocationHandler(event) {
+    if (readonly) {
+      return;
+    }
     setSelectedLocation({
       lat: event.nativeEvent.coordinate.latitude,
       lng: event.nativeEvent.coordinate.longitude,
@@ -65,10 +72,17 @@ export default function MapScreen({ navigation, route }) {
 }
 
 export const screenOptionsMap = (navData) => {
-  const saveFn = navData.route.params
-    ? navData.route.params.saveLocation
+  const routeParams = navData.route.params;
+  const saveFn = routeParams
+    ? routeParams.saveLocation
     : null;
-    const routeParams = navData.route.params ? navData.route.params : {};
+
+    // const saveFN = navData.navigation.setOptions ? navData.navigation.setOptions.saveLocation : null
+    
+    const readonly = routeParams ? routeParams.readonly : null;
+    if (readonly) {
+      return {}
+    }
 //   console.log("navData route", navData.route.params);
 //   console.log(routeParams);
   return {
